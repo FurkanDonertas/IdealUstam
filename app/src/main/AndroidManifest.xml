@@ -4,35 +4,36 @@
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.IdealUstam"
-        tools:targetApi="31">
+        android:theme="@style/Theme.IdealUstam">
 
-        <!-- SplashActivity, uygulamanın başlangç aktivitesi olarak ayarlandı -->
         <activity
             android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Ana ekran aktivitesi -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true" />
+            android:name=".features.onboarding.presentation.view.OnboardingActivity"
+            android:exported="false" />
 
-        <!-- Onboarding Activity -->
         <activity
-            android:name=".OnboardingActivity"
-            android:exported="true" />
+            android:name=".features.auth.presentation.view.LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".features.auth.presentation.view.SignUpActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".features.auth.presentation.view.ForgotPasswordActivity"
+            android:exported="false" />
 
     </application>
 

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.furkandonertas.idealustam.databinding.ActivitySplashBinding
-
+import com.furkandonertas.idealustam.features.onboarding.presentation.view.OnboardingActivity
 
 class SplashActivity : AppCompatActivity() {
 
