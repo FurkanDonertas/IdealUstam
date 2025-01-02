@@ -35,6 +35,10 @@
             android:name=".features.auth.presentation.view.ForgotPasswordActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
