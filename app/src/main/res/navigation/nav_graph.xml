@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.furkandonertas.idealustam.features.home.presentation.view.HomeFragment"
+        android:label="Ana Sayfa" />
+
+    <fragment
+        android:id="@+id/servicesFragment"
+        android:name="com.furkandonertas.idealustam.features.services.presentation.view.ServicesFragment"
+        android:label="Hizmetler" />
+
+    <fragment
+        android:id="@+id/mastersFragment"
+        android:name="com.furkandonertas.idealustam.features.masters.presentation.view.MastersFragment"
+        android:label="Ustalar" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.furkandonertas.idealustam.features.settings.presentation.view.SettingsFragment"
+        android:label="Ayarlar" />
+
+</navigation> 

@@ -13,4 +13,7 @@
     <color name="input_background">#F5F5F5</color>
     <color name="input_text">#757575</color>
     <color name="input_hint">#BDBDBD</color>
+    <color name="nav_selected">#0066B3</color>
+    <color name="nav_unselected">#4D0066B3</color>
+    <color name="red">#FF0000</color>
 </resources>
