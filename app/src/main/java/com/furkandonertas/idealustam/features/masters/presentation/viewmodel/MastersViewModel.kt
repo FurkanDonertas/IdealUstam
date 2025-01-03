@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.furkandonertas.idealustam.features.masters.domain.model.Master
-import com.furkandonertas.idealustam.features.masters.domain.usecase.GetMastersUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MastersViewModel(private val getMastersUseCase: GetMastersUseCase) : ViewModel() {
+class MastersViewModel : ViewModel() {
 
     private val _mastersState = MutableLiveData<MastersState>()
     val mastersState: LiveData<MastersState> = _mastersState
@@ -24,18 +24,58 @@ class MastersViewModel(private val getMastersUseCase: GetMastersUseCase) : ViewM
         _mastersState.value = MastersState.Loading
 
         viewModelScope.launch {
-            getMastersUseCase()
-                .onSuccess { masters ->
-                    _mastersState.value = if (masters.isEmpty()) {
-                        MastersState.Empty
-                    } else {
-                        MastersState.Success(masters)
-                    }
-                }
-                .onFailure { exception ->
-                    _mastersState.value = MastersState.Error
-                    _errorMessage.value = exception.message ?: "Ustalar yüklenirken bir hata oluştu"
-                }
+            // Simüle edilmiş yükleme gecikmesi
+            delay(1000)
+            
+            // Mock veri
+            val mockMasters = listOf(
+                Master(
+                    id = "1",
+                    name = "Ahmet Usta",
+                    specialty = "Motor Tamiri",
+                    rating = 4.5f,
+                    experience = 15,
+                    location = "İstanbul",
+                    imageUrl = null,
+                    isFavorite = false
+                ),
+                Master(
+                    id = "2",
+                    name = "Mehmet Usta",
+                    specialty = "Kaporta Boyama",
+                    rating = 4.8f,
+                    experience = 20,
+                    location = "Ankara",
+                    imageUrl = null,
+                    isFavorite = true
+                ),
+                Master(
+                    id = "3",
+                    name = "Ali Usta",
+                    specialty = "Elektrik Sistemleri",
+                    rating = 4.3f,
+                    experience = 10,
+                    location = "İzmir",
+                    imageUrl = null,
+                    isFavorite = false
+                )
+            )
+            
+            _mastersState.value = MastersState.Success(mockMasters)
+        }
+    }
+
+    fun onMasterSelected(master: Master) {
+        // TODO: Implement navigation or detail view
+    }
+
+    fun onFavoriteClicked(master: Master) {
+        val currentState = _mastersState.value
+        if (currentState is MastersState.Success) {
+            val updatedMasters = currentState.masters.map {
+                if (it.id == master.id) it.copy(isFavorite = !it.isFavorite) else it
+            }
+            _mastersState.value = MastersState.Success(updatedMasters)
         }
     }
 

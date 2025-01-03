@@ -12,6 +12,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        libs {
+            library('androidx-navigation-fragment-ktx', 'androidx.navigation:navigation-fragment-ktx:2.7.6')
+            library('androidx-navigation-ui-ktx', 'androidx.navigation:navigation-ui-ktx:2.7.6')
+        }
+    }
 }
 
 rootProject.name = "IdealUstam"

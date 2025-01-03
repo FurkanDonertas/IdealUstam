@@ -4,94 +4,103 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.furkandonertas.idealustam.R
+import com.furkandonertas.idealustam.databinding.FragmentMastersBinding
+import com.furkandonertas.idealustam.features.masters.presentation.adapter.MasterAdapter
 import com.furkandonertas.idealustam.features.masters.presentation.viewmodel.MastersViewModel
-import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.furkandonertas.idealustam.features.masters.domain.model.Master
 
 class MastersFragment : Fragment() {
 
+    private var _binding: FragmentMastersBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: MastersViewModel by viewModels()
-    
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var progressIndicator: CircularProgressIndicator
-    private lateinit var emptyView: View
-    private lateinit var errorView: View
+    private lateinit var masterAdapter: MasterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_masters, container, false)
+    ): View {
+        _binding = FragmentMastersBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViews(view)
-        setupListeners()
-        observeViewModel()
+        setupRecyclerView()
+        setupObservers()
     }
 
-    private fun setupViews(view: View) {
-        recyclerView = view.findViewById(R.id.recyclerView)
-        progressIndicator = view.findViewById(R.id.progressIndicator)
-        emptyView = view.findViewById(R.id.emptyView)
-        errorView = view.findViewById(R.id.errorView)
-
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-    }
-
-    private fun setupListeners() {
-        errorView.findViewById<View>(R.id.retryButton).setOnClickListener {
-            viewModel.loadMasters()
+    private fun setupRecyclerView() {
+        masterAdapter = MasterAdapter(
+            masters = emptyList(),
+            onMasterClick = { master -> viewModel.onMasterSelected(master) },
+            onFavoriteClick = { master -> viewModel.onFavoriteClicked(master) }
+        )
+        binding.recyclerView.apply {
+            adapter = masterAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
-    private fun observeViewModel() {
+    private fun setupObservers() {
         viewModel.mastersState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                MastersViewModel.MastersState.Loading -> {
-                    progressIndicator.visibility = View.VISIBLE
-                    recyclerView.visibility = View.GONE
-                    emptyView.visibility = View.GONE
-                    errorView.visibility = View.GONE
-                }
-                MastersViewModel.MastersState.Empty -> {
-                    progressIndicator.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
-                    emptyView.visibility = View.VISIBLE
-                    errorView.visibility = View.GONE
-                }
-                is MastersViewModel.MastersState.Success -> {
-                    progressIndicator.visibility = View.GONE
-                    recyclerView.visibility = View.VISIBLE
-                    emptyView.visibility = View.GONE
-                    errorView.visibility = View.GONE
-                    // TODO: RecyclerView adapter'ını güncelle
-                }
-                MastersViewModel.MastersState.Error -> {
-                    progressIndicator.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
-                    emptyView.visibility = View.GONE
-                    errorView.visibility = View.VISIBLE
-                }
-                else -> {
-                    progressIndicator.visibility = View.GONE
-                }
+                is MastersViewModel.MastersState.Loading -> showLoading()
+                is MastersViewModel.MastersState.Success -> showMasters(state.masters)
+                is MastersViewModel.MastersState.Error -> showError()
+                is MastersViewModel.MastersState.Empty -> showEmpty()
+                is MastersViewModel.MastersState.Initial -> Unit
             }
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            // TODO: Show error message in a snackbar or toast
         }
     }
 
-    companion object {
-        fun newInstance() = MastersFragment()
+    private fun showLoading() {
+        binding.apply {
+            progressBar.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+            errorLayout.visibility = View.GONE
+            emptyLayout.visibility = View.GONE
+        }
+    }
+
+    private fun showMasters(masters: List<Master>) {
+        binding.apply {
+            progressBar.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            errorLayout.visibility = View.GONE
+            emptyLayout.visibility = View.GONE
+        }
+        masterAdapter.updateMasters(masters)
+    }
+
+    private fun showError() {
+        binding.apply {
+            progressBar.visibility = View.GONE
+            recyclerView.visibility = View.GONE
+            errorLayout.visibility = View.VISIBLE
+            emptyLayout.visibility = View.GONE
+        }
+    }
+
+    private fun showEmpty() {
+        binding.apply {
+            progressBar.visibility = View.GONE
+            recyclerView.visibility = View.GONE
+            errorLayout.visibility = View.GONE
+            emptyLayout.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 } 

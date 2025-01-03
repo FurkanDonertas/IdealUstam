@@ -6,22 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.furkandonertas.idealustam.R
 import com.furkandonertas.idealustam.features.auth.presentation.view.LoginActivity
-import com.furkandonertas.idealustam.features.settings.presentation.viewmodel.SettingsViewModel
-import com.google.android.material.materialswitch.MaterialSwitch
-import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.button.MaterialButton
+import android.widget.LinearLayout
 
 class SettingsFragment : Fragment() {
-
-    private val viewModel: SettingsViewModel by viewModels()
-    
-    private lateinit var progressIndicator: CircularProgressIndicator
-    private lateinit var themeSwitch: MaterialSwitch
-    private lateinit var notificationsSwitch: MaterialSwitch
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,73 +24,28 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViews(view)
-        setupListeners()
-        observeViewModel()
-    }
 
-    private fun setupViews(view: View) {
-        progressIndicator = view.findViewById(R.id.progressIndicator)
-        themeSwitch = view.findViewById(R.id.themeSwitch)
-        notificationsSwitch = view.findViewById(R.id.notificationsSwitch)
-    }
-
-    private fun setupListeners() {
-        themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.updateTheme(isChecked)
+        // Tema ayarları tıklama
+        view.findViewById<LinearLayout>(R.id.themeLayout).setOnClickListener {
+            Toast.makeText(context, "Tema ayarları yakında aktif olacak", Toast.LENGTH_SHORT).show()
         }
 
-        notificationsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.updateNotifications(isChecked)
+        // Bildirim ayarları tıklama
+        view.findViewById<LinearLayout>(R.id.notificationLayout).setOnClickListener {
+            Toast.makeText(context, "Bildirim ayarları yakında aktif olacak", Toast.LENGTH_SHORT).show()
         }
 
-        view?.findViewById<View>(R.id.logoutButton)?.setOnClickListener {
-            showLogoutConfirmationDialog()
-        }
-    }
-
-    private fun observeViewModel() {
-        viewModel.settingsState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                SettingsViewModel.SettingsState.Loading -> {
-                    progressIndicator.visibility = View.VISIBLE
-                }
-                is SettingsViewModel.SettingsState.Success -> {
-                    progressIndicator.visibility = View.GONE
-                    themeSwitch.isChecked = state.settings.isDarkTheme
-                    notificationsSwitch.isChecked = state.settings.isNotificationsEnabled
-                }
-                SettingsViewModel.SettingsState.Error -> {
-                    progressIndicator.visibility = View.GONE
-                }
-                else -> {
-                    progressIndicator.visibility = View.GONE
-                }
-            }
+        // Uygulama hakkında tıklama
+        view.findViewById<LinearLayout>(R.id.aboutLayout).setOnClickListener {
+            Toast.makeText(context, "Uygulama hakkında yakında aktif olacak", Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        // Çıkış yap butonu
+        view.findViewById<MaterialButton>(R.id.logoutButton).setOnClickListener {
+            // LoginActivity'ye yönlendir
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
         }
-    }
-
-    private fun showLogoutConfirmationDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Çıkış Yap")
-            .setMessage("Çıkış yapmak istediğinize emin misiniz?")
-            .setPositiveButton("Evet") { _, _ ->
-                viewModel.logout()
-                navigateToLogin()
-            }
-            .setNegativeButton("Hayır", null)
-            .show()
-    }
-
-    private fun navigateToLogin() {
-        val intent = Intent(requireContext(), LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        requireActivity().finish()
     }
 
     companion object {

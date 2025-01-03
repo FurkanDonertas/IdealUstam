@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import com.furkandonertas.idealustam.features.home.presentation.view.MyCarFragment
 import com.furkandonertas.idealustam.features.masters.presentation.view.MastersFragment
 import com.furkandonertas.idealustam.features.services.presentation.view.ServicesFragment
-import com.furkandonertas.idealustam.features.settings.presentation.view.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.furkandonertas.idealustam.features.settings.presentation.view.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_my_car -> {
-                    loadFragment(MyCarFragment.newInstance())
+                    loadFragment(MyCarFragment())
                     true
                 }
                 R.id.navigation_services -> {
-                    loadFragment(ServicesFragment.newInstance())
+                    loadFragment(ServicesFragment())
                     true
                 }
                 R.id.navigation_ustabul -> {
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_ustalarim -> {
-                    loadFragment(MastersFragment.newInstance())
+                    loadFragment(MastersFragment())
                     true
                 }
                 R.id.navigation_settings -> {
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Başlangıçta Arabam sayfasını göster
-        loadFragment(MyCarFragment.newInstance())
+        loadFragment(MyCarFragment())
     }
 
     private fun loadFragment(fragment: Fragment) {

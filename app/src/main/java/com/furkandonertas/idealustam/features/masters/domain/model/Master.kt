@@ -1,14 +1,12 @@
 package com.furkandonertas.idealustam.features.masters.domain.model
 
 data class Master(
-    val id: Int,
+    val id: String,
     val name: String,
-    val specialization: String,
-    val imageUrl: String? = null,
+    val specialty: String,
     val rating: Float,
-    val reviewCount: Int,
-    val experience: Int, // Yıl cinsinden
+    val experience: Int,
     val location: String,
-    val isAvailable: Boolean,
-    val services: List<String>
+    val imageUrl: String?,
+    val isFavorite: Boolean
 ) 
