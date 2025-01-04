@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -62,9 +63,10 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)  // 10 -> 30
+            .readTimeout(30, TimeUnit.SECONDS)     // 10 -> 30
+            .writeTimeout(30, TimeUnit.SECONDS)    // 10 -> 30
+            .retryOnConnectionFailure(true)
             .build()
     }
 
@@ -72,7 +74,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/") // Android Emulator localhost
+            .baseUrl("http://10.0.2.2:8080/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
