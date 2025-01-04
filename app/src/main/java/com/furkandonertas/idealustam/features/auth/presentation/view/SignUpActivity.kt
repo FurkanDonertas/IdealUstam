@@ -22,6 +22,7 @@ class SignUpActivity : AppCompatActivity() {
     private val viewModel: AuthViewModel by viewModels()
 
     private lateinit var emailInput: TextInputEditText
+    private lateinit var usernameInput: TextInputEditText
     private lateinit var passwordInput: TextInputEditText
     private lateinit var confirmPasswordInput: TextInputEditText
     private lateinit var createAccountButton: MaterialButton
@@ -38,6 +39,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initializeViews() {
         emailInput = findViewById(R.id.emailInput)
+        usernameInput = findViewById(R.id.usernameInput)  // Yeni eklendi
         passwordInput = findViewById(R.id.passwordInput)
         confirmPasswordInput = findViewById(R.id.confirmPasswordInput)
         createAccountButton = findViewById(R.id.createAccountButton)
@@ -52,14 +54,15 @@ class SignUpActivity : AppCompatActivity() {
 
         createAccountButton.setOnClickListener {
             val email = emailInput.text.toString()
+            val username = usernameInput.text.toString()  // Yeni eklendi
             val password = passwordInput.text.toString()
             val confirmPassword = confirmPasswordInput.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && username.isNotEmpty()) {
                 if (password == confirmPassword) {
                     progressIndicator.visibility = View.VISIBLE
                     createAccountButton.visibility = View.INVISIBLE
-                    viewModel.register(email, password, "")
+                    viewModel.register(email, password, username)
                 } else {
                     Toast.makeText(this, "Şifreler eşleşmiyor", Toast.LENGTH_SHORT).show()
                 }
