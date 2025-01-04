@@ -1,32 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
-
+    app:startDestination="@id/navigation_my_car">
+    
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.furkandonertas.idealustam.features.home.presentation.view.HomeFragment"
-        android:label="Ana Sayfa"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/navigation_my_car"
+        android:name="com.furkandonertas.idealustam.features.mycar.presentation.view.MyCarFragment"
+        android:label="Arabam" />
+        
     <fragment
-        android:id="@+id/servicesFragment"
+        android:id="@+id/navigation_services"
         android:name="com.furkandonertas.idealustam.features.services.presentation.view.ServicesFragment"
-        android:label="Hizmetler"
-        tools:layout="@layout/fragment_services" />
-
+        android:label="Servisler" />
+        
     <fragment
-        android:id="@+id/mastersFragment"
+        android:id="@+id/navigation_ustalarim"
         android:name="com.furkandonertas.idealustam.features.masters.presentation.view.MastersFragment"
-        android:label="Ustalar"
-        tools:layout="@layout/fragment_masters" />
-
+        android:label="Ustalarım" />
+        
     <fragment
-        android:id="@+id/settingsFragment"
+        android:id="@+id/navigation_settings"
         android:name="com.furkandonertas.idealustam.features.settings.presentation.view.SettingsFragment"
-        android:label="Ayarlar"
-        tools:layout="@layout/fragment_settings" />
-
+        android:label="Ayarlar" />
 </navigation> 

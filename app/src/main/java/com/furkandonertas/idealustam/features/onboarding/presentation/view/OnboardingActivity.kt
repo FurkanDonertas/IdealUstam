@@ -36,7 +36,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         val adapter = OnboardingAdapter(onboardingItems)
         val viewPager = findViewById<ViewPager2>(R.id.viewPager)
-        val dotsIndicator = findViewById<DotsIndicator>(R.id.dotsIndicator)
+        val dotsIndicator = findViewById<DotsIndicator>(R.id.dots_indicator)
         
         viewPager.adapter = adapter
         dotsIndicator.attachTo(viewPager)
