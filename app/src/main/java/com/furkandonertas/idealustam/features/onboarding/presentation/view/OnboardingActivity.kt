@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.furkandonertas.idealustam.R
 import com.furkandonertas.idealustam.features.auth.presentation.view.LoginActivity
+import com.furkandonertas.idealustam.features.auth.presentation.view.SignUpActivity
 import com.furkandonertas.idealustam.features.onboarding.domain.model.OnboardingItem
 import com.furkandonertas.idealustam.features.onboarding.presentation.adapter.OnboardingAdapter
 import com.furkandonertas.idealustam.features.onboarding.presentation.viewmodel.OnboardingViewModel
@@ -57,7 +58,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         signUpButton.setOnClickListener {
             // TODO: SignUp Activity'ye yönlendirme yapılacak
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
             finish()
         }
     }
