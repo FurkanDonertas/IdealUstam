@@ -17,11 +17,21 @@ class AuthViewModel @Inject constructor(
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Initial)
     val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
+    private val _verificationState = MutableStateFlow<VerificationState>(VerificationState.Initial)
+    val verificationState: StateFlow<VerificationState> = _verificationState.asStateFlow()
+
     sealed class LoginState {
         object Initial : LoginState()
         object Loading : LoginState()
-        object Success : LoginState()
+        data class Success(val message: String? = null) : LoginState()
         data class Error(val message: String) : LoginState()
+    }
+
+    sealed class VerificationState {
+        object Initial : VerificationState()
+        object Loading : VerificationState()
+        data class Success(val message: String? = null) : VerificationState()
+        data class Error(val message: String) : VerificationState()
     }
 
     fun login(email: String, password: String) {
@@ -29,14 +39,14 @@ class AuthViewModel @Inject constructor(
             _loginState.value = LoginState.Loading
             try {
                 authRepository.login(email, password)
-                    .onSuccess {
-                        _loginState.value = LoginState.Success
+                    .onSuccess { response ->
+                        _loginState.value = LoginState.Success("Giriş başarılı")
                     }
-                    .onFailure {
-                        _loginState.value = LoginState.Error(it.message ?: "Giriş başarısız")
+                    .onFailure { error ->
+                        _loginState.value = LoginState.Error(error.message ?: "Giriş başarısız")
                     }
             } catch (e: Exception) {
-                _loginState.value = LoginState.Error("Bir hata oluştu: ${e.message}")
+                _loginState.value = LoginState.Error(e.message ?: "Bir hata oluştu")
             }
         }
     }
@@ -44,13 +54,51 @@ class AuthViewModel @Inject constructor(
     fun register(email: String, password: String, username: String) {
         viewModelScope.launch {
             _loginState.value = LoginState.Loading
-            authRepository.register(email, password, username)
-                .onSuccess {
-                    _loginState.value = LoginState.Success
-                }
-                .onFailure {
-                    _loginState.value = LoginState.Error(it.message ?: "Kayıt başarısız")
-                }
+            try {
+                authRepository.register(email, password, username)
+                    .onSuccess { user ->
+                        _loginState.value = LoginState.Success("Kayıt başarılı")
+                    }
+                    .onFailure { error ->
+                        _loginState.value = LoginState.Error(error.message ?: "Kayıt başarısız")
+                    }
+            } catch (e: Exception) {
+                _loginState.value = LoginState.Error(e.message ?: "Bir hata oluştu")
+            }
         }
     }
-} 
+
+    fun verifyEmail(email: String, code: String) {
+        viewModelScope.launch {
+            _verificationState.value = VerificationState.Loading
+            try {
+                authRepository.verifyEmail(email, code)
+                    .onSuccess { message ->
+                        _verificationState.value = VerificationState.Success(message)
+                    }
+                    .onFailure { error ->
+                        _verificationState.value = VerificationState.Error(error.message ?: "Doğrulama başarısız")
+                    }
+            } catch (e: Exception) {
+                _verificationState.value = VerificationState.Error(e.message ?: "Bir hata oluştu")
+            }
+        }
+    }
+
+    fun resendVerificationCode(email: String) {
+        viewModelScope.launch {
+            _verificationState.value = VerificationState.Loading
+            try {
+                authRepository.resendVerificationCode(email)
+                    .onSuccess { message ->
+                        _verificationState.value = VerificationState.Success(message)
+                    }
+                    .onFailure { error ->
+                        _verificationState.value = VerificationState.Error(error.message ?: "Kod gönderilemedi")
+                    }
+            } catch (e: Exception) {
+                _verificationState.value = VerificationState.Error(e.message ?: "Bir hata oluştu")
+            }
+        }
+    }
+}

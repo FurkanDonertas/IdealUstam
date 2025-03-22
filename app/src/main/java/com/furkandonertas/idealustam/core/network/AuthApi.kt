@@ -1,26 +1,24 @@
 package com.furkandonertas.idealustam.core.network
 
-import User
-import VerifyRequest
+import com.furkandonertas.idealustam.features.auth.data.model.*
+import com.furkandonertas.idealustam.features.auth.domain.model.User
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.Query
-import com.furkandonertas.idealustam.features.auth.data.model.LoginRequest
-import com.furkandonertas.idealustam.features.auth.data.model.RegisterRequest
-
-import com.furkandonertas.idealustam.features.auth.data.model.LoginResponse
+import retrofit2.http.*
 
 interface AuthApi {
+    @Headers("Content-Type: application/json")
     @POST("auth/signup")
     suspend fun signup(@Body request: RegisterRequest): Response<User>
 
+    @Headers("Content-Type: application/json")
     @POST("auth/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
+    @Headers("Content-Type: application/json")
     @POST("auth/verify")
-    suspend fun verifyEmail(@Body request: VerifyRequest): Response<Unit>
+    suspend fun verifyEmail(@Body request: VerifyRequest): Response<String>
 
+    @Headers("Content-Type: application/json")
     @POST("auth/resend")
-    suspend fun resendVerificationCode(@Query("email") email: String): Response<Unit>
+    suspend fun resendVerificationCode(@Query("email") email: String): Response<String>
 } 

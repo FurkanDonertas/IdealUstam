@@ -39,7 +39,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initializeViews() {
         emailInput = findViewById(R.id.emailInput)
-        usernameInput = findViewById(R.id.usernameInput)  // Yeni eklendi
+        usernameInput = findViewById(R.id.usernameInput)
         passwordInput = findViewById(R.id.passwordInput)
         confirmPasswordInput = findViewById(R.id.confirmPasswordInput)
         createAccountButton = findViewById(R.id.createAccountButton)
@@ -54,7 +54,7 @@ class SignUpActivity : AppCompatActivity() {
 
         createAccountButton.setOnClickListener {
             val email = emailInput.text.toString()
-            val username = usernameInput.text.toString()  // Yeni eklendi
+            val username = usernameInput.text.toString()
             val password = passwordInput.text.toString()
             val confirmPassword = confirmPasswordInput.text.toString()
 
@@ -83,8 +83,13 @@ class SignUpActivity : AppCompatActivity() {
                     is AuthViewModel.LoginState.Success -> {
                         progressIndicator.visibility = View.GONE
                         createAccountButton.isEnabled = true
-                        Toast.makeText(this@SignUpActivity, "Kayıt başarılı! Giriş yapabilirsiniz.", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                        Toast.makeText(this@SignUpActivity, "Kayıt başarılı! Lütfen email adresinizi doğrulayın.", Toast.LENGTH_SHORT).show()
+                        
+                        val email = emailInput.text.toString()
+                        // VerifyActivity'ye yönlendir
+                        startActivity(Intent(this@SignUpActivity, VerifyActivity::class.java).apply {
+                            putExtra("email", email)
+                        })
                         finish()
                     }
                     is AuthViewModel.LoginState.Error -> {
