@@ -1,215 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:fillViewport="true">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Araç Detayları"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginBottom="24dp"/>
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Transmission -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Transmission"
-        android:textColor="@color/black"
-        android:textSize="16sp"/>
-
-    <com.google.android.material.button.MaterialButtonToggleGroup
-
-        android:id="@+id/transmissionToggle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:singleSelection="true"
-        app:selectionRequired="true">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/autoButton"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Auto"
-            style="?attr/materialButtonOutlinedStyle"
-            app:strokeColor="@color/primary_blue"
-            android:textColor="@color/black"/>
+            android:text="Car Details"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="24dp"/>
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/manualButton"
-            android:layout_width="0dp"
+        <!-- Brand -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Manual"
-            style="?attr/materialButtonOutlinedStyle"
-            app:strokeColor="@color/primary_blue"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            android:textColor="@color/black"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/brandInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Brand (e.g. Mercedes)"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+        <!-- Model -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <!-- Fuel Type -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fuel Type"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/modelInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Model (e.g. CLA)"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:scrollbars="none">
+        <!-- Year -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/fuelTypeToggle"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/yearInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Year (e.g. 2009)"
+                android:inputType="number"
+                android:maxLength="4"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Series -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/seriesInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Series (e.g. C series)"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Transmission -->
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Transmission"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+
+            android:id="@+id/transmissionToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:singleSelection="true"
             app:selectionRequired="true">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/dieselButton"
-                android:layout_width="wrap_content"
+                android:id="@+id/autoButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Diesel"
+                android:layout_weight="1"
+                android:text="Auto"
                 style="?attr/materialButtonOutlinedStyle"
                 app:strokeColor="@color/primary_blue"
                 android:textColor="@color/black"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/gasolineButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gasoline"
-                app:strokeColor="@color/primary_blue"
-                style="?attr/materialButtonOutlinedStyle"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/electricButton"
-                android:layout_width="wrap_content"
+                android:id="@+id/manualButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Electric"
+                android:layout_weight="1"
+                android:text="Manual"
+                style="?attr/materialButtonOutlinedStyle"
                 app:strokeColor="@color/primary_blue"
-                style="?attr/materialButtonOutlinedStyle"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/hybridButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hybrid"
-                app:strokeColor="@color/primary_blue"
-                style="?attr/materialButtonOutlinedStyle"/>
+                android:textColor="@color/black"/>
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
-    </HorizontalScrollView>
 
-    <!-- Input Fields -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        <!-- Fuel Type -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fuel Type"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
 
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/engineSizeInput"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Engine Size (e.g. 1.4)"
+            android:layout_marginTop="8dp"
+            android:scrollbars="none">
 
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/fuelTypeToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true">
 
-            android:inputType="numberDecimal"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dieselButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diesel"
+                    style="?attr/materialButtonOutlinedStyle"
+                    app:strokeColor="@color/primary_blue"
+                    android:textColor="@color/black"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/gasolineButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gasoline"
+                    app:strokeColor="@color/primary_blue"
+                    style="?attr/materialButtonOutlinedStyle"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/cylindersInput"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/electricButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Electric"
+                    app:strokeColor="@color/primary_blue"
+                    style="?attr/materialButtonOutlinedStyle"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/hybridButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hybrid"
+                    app:strokeColor="@color/primary_blue"
+                    style="?attr/materialButtonOutlinedStyle"/>
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+        </HorizontalScrollView>
+
+        <!-- Input Fields -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Number of Cylinders"
-            android:inputType="number"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="16dp"
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/horsepowerInput"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/engineSizeInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Engine Size (e.g. 1.4)"
+
+
+                android:inputType="numberDecimal"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Horsepower"
-            android:inputType="number"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cylindersInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Number of Cylinders"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/maxSpeedInput"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Max Speed (km/h)"
-            android:inputType="number"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/horsepowerInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Horsepower"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/torqueInput"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Torque (Nm)"
-            android:inputType="number"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/maxSpeedInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Max Speed (km/h)"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mileageInput"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mileage (km)"
-            android:inputType="number"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/saveCarButton"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="24dp"
-        android:text="Save Car"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/primary_blue"
-        app:cornerRadius="28dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/torqueInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Torque (Nm)"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout> 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mileageInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mileage (km)"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveCarButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="Save Car"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/primary_blue"
+            app:cornerRadius="28dp"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView> 

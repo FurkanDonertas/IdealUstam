@@ -34,6 +34,12 @@ class LoginActivity : AppCompatActivity() {
         initializeViews()
         setupClickListeners()
         observeViewModel()
+        
+        // Verification'dan gelen email'i doldur
+        intent.getStringExtra("email")?.let { email ->
+            emailInput.setText(email)
+            passwordInput.requestFocus()
+        }
     }
 
     private fun initializeViews() {
@@ -56,7 +62,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.loginButton).setOnClickListener {
-            val email = emailInput.text.toString()
+            // Demo için direkt MainActivity'ye geçiş
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+            finish()
+            
+            // Eski login kontrolü (şimdilik yorum satırı)
+            /*
+            val email: String = emailInput.text.toString()
             val password = passwordInput.text.toString()
             
             if (email.isNotEmpty() && password.isNotEmpty()) {
@@ -64,6 +78,7 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Lütfen tüm alanları doldurun", Toast.LENGTH_SHORT).show()
             }
+            */
         }
     }
 
